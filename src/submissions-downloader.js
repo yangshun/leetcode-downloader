@@ -28,6 +28,7 @@ const extensionsMap = {
     ruby: 'rb',
     swift: 'swift',
     golang: 'go',
+    scala: 'scala',
 };
 
 console.log(`Downloading ${submissions.length} submissions`);
