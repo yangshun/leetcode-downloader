@@ -29,6 +29,7 @@ const extensionsMap = {
     swift: 'swift',
     golang: 'go',
     scala: 'scala',
+    mysql: 'sql',
 };
 
 console.log(`Downloading ${submissions.length} submissions`);
