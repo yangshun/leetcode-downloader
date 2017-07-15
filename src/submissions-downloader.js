@@ -18,18 +18,18 @@ const dataPath = '../data';
 const submissions = require('./submissions.json');
 const codeRegex = /submissionCode: '(.*)',\n  editCodeUrl/;
 const extensionsMap = {
+    c: 'c',
     cpp: 'cpp',
+    csharp: 'cs',
+    golang: 'go',
     java: 'java',
+    javascript: 'js',
+    mysql: 'sql',
     python: 'py',
     python3: 'py',
-    c: 'c',
-    csharp: 'cs',
-    javascript: 'js',
     ruby: 'rb',
-    swift: 'swift',
-    golang: 'go',
     scala: 'scala',
-    mysql: 'sql',
+    swift: 'swift',
 };
 
 console.log(`Downloading ${submissions.length} submissions`);
