@@ -18,6 +18,7 @@ const dataPath = '../data';
 const submissions = require('./submissions.json');
 const codeRegex = /submissionCode: '(.*)',\n  editCodeUrl/;
 const extensionsMap = {
+    bash: 'sh',
     c: 'c',
     cpp: 'cpp',
     csharp: 'cs',
