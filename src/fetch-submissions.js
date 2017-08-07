@@ -51,8 +51,11 @@ axios.request(Object.assign(requestParams, {
     return Promise.all(promises);
 }).then(() => {
     console.log('\nDone fetching');
+    zeroSubmissionsAccepted.sort((a, b) => a.id - b.id);
+    submissions.sort((a, b) => a.id - b.id);
     fs.writeFileSync('zero-submissions.json', JSON.stringify(zeroSubmissionsAccepted, null, 2));
     fs.writeFileSync('submissions.json', JSON.stringify(submissions, null, 2));
+    process.exit();
 });
 
 setTimeout(() => {
