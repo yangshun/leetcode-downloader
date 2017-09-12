@@ -17,7 +17,7 @@ Copy your LeetCode cookie from the browser and paste it in `config.json`. Open y
 ```
 $ cd src
 $ node fetch-submissions.js
-$ node submissions-downloader.js
+$ node download-submissions.js
 ````
 
 The first command fetches the URLs to your submissions into a `submissions.json` file. Some of your accepted questions may not have submissions if they were accepted only via contest. Those questions will be written in `zero-submissions.json`.

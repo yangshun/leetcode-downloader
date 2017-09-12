@@ -1,6 +1,7 @@
 const axios = require('axios');
 const fs = require('fs');
 
+const TIMEOUT = 10000;
 const cookie = require('./config.json').cookie;
 if (!cookie) {
     console.error('Please provide your cookie in "config.json"!');
@@ -25,28 +26,40 @@ axios.request(Object.assign(requestParams, {
     questions.filter(question => question.status === 'ac').forEach(question => {
         const id = question.stat.question_id;
         const slug = question.stat.question__title_slug;
-        promises.push(axios.request(Object.assign(requestParams, {
-            url: `https://leetcode.com/api/submissions/${slug}`,
-        })).then(response => {
-            const numberOfSubmissions = response.data.submissions_dump.length;
-            if (numberOfSubmissions === 0) {
-                zeroSubmissionsAccepted.push({ id, slug });
-                return;
-            }
-            console.log(id + '-' + slug + ': ' + response.data.submissions_dump.length + ' submissions');
-            for (let i = 0; i < numberOfSubmissions; i++) {
-                const submission = response.data.submissions_dump[i];
-                if (submission.status_display === 'Accepted') {
-                    submissions.push({
-                        id,
-                        slug,
-                        url: submission.url,
-                        language: submission.lang,
-                    });
-                    break;
+        const promise = new Promise(resolve => {
+            const timer = setTimeout(() => {
+                console.log(`Timeout for ${id}-${slug}`);
+                resolve();
+            }, TIMEOUT);
+            axios.request(Object.assign(requestParams, {
+                url: `https://leetcode.com/api/submissions/${slug}`,
+            })).then(response => {
+                const numberOfSubmissions = response.data.submissions_dump.length;
+                if (numberOfSubmissions === 0) {
+                    zeroSubmissionsAccepted.push({ id, slug });
+                    return;
                 }
-            }
-        }));
+                console.log(`${id}-${slug}: ${response.data.submissions_dump.length} submissions`);
+                for (let i = 0; i < numberOfSubmissions; i++) {
+                    const submission = response.data.submissions_dump[i];
+                    if (submission.status_display === 'Accepted') {
+                        submissions.push({
+                            id,
+                            slug,
+                            url: submission.url,
+                            language: submission.lang,
+                        });
+                        break;
+                    }
+                }
+            }).catch(error => {
+                console.warn(error);
+            }).then(() => {
+                clearTimeout(timer);
+                resolve();
+            });
+        });
+        promises.push(promise);
     });
     return Promise.all(promises);
 }).then(() => {
@@ -57,7 +70,3 @@ axios.request(Object.assign(requestParams, {
     fs.writeFileSync('submissions.json', JSON.stringify(submissions, null, 2));
     process.exit();
 });
-
-setTimeout(() => {
-    console.log('\nLeetCode servers may have failed to give a response. Try killing the process and running the command again.')
-}, 30000);
