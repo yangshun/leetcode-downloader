@@ -1,5 +1,4 @@
-LeetCode Downloader
-==
+# LeetCode Downloader
 
 Download your accepted submissions from LeetCode!
 
@@ -10,7 +9,7 @@ $ npm install
 $ cp src/config.json.example src/config.json
 ```
 
-Copy your LeetCode cookie from the browser and paste it in `config.json`. Open your browser debugger, select the "Network" tab, and refresh the page. Look for the `Cookie` string under the `Request-Headers` section for the first network request made. The string should be in the form of `LEETCODE_SESSION=...`.
+Copy your LeetCode cookie from the browser and paste it in `config.json`. Open your browser debugger, select the "Network" tab, and refresh the page. Look for the `Cookie` string under the `Request-Headers` section for the first network request made and copy the **entire value**. The string should start with `__cfduid=...` (as of Jan 18 2018).
 
 ## Usage
 
@@ -18,7 +17,7 @@ Copy your LeetCode cookie from the browser and paste it in `config.json`. Open y
 $ cd src
 $ node fetch-submissions.js
 $ node download-submissions.js
-````
+```
 
 The first command fetches the URLs to your submissions into a `submissions.json` file. Some of your accepted questions may not have submissions if they were accepted only via contest. Those questions will be written in `zero-submissions.json`.
 

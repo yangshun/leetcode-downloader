@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Yangshun Tay",
+  "license": "MIT",
   "dependencies": {
     "axios": "^0.16.2"
   }
