@@ -21,13 +21,12 @@ axios
     .request(
         Object.assign(requestParams, {
             url: 'https://leetcode.com/api/problems/all/',
-        }),
+        })
     )
     .then(response => {
         const questions = response.data.stat_status_pairs;
         const promises = [];
         questions
-            .filter(question => question.status === 'ac')
             .forEach(question => {
                 console.log(question);
                 const id = question.stat.question_id;
@@ -41,7 +40,7 @@ axios
                         .request(
                             Object.assign(requestParams, {
                                 url: `https://leetcode.com/api/submissions/${slug}`,
-                            }),
+                            })
                         )
                         .then(response => {
                             const numberOfSubmissions =
@@ -53,7 +52,7 @@ axios
                             console.log(
                                 `${id}-${slug}: ${
                                     response.data.submissions_dump.length
-                                } submissions`,
+                                } submissions`
                             );
                             for (let i = 0; i < numberOfSubmissions; i++) {
                                 const submission =
@@ -87,11 +86,11 @@ axios
         submissions.sort((a, b) => a.id - b.id);
         fs.writeFileSync(
             'zero-submissions.json',
-            JSON.stringify(zeroSubmissionsAccepted, null, 2),
+            JSON.stringify(zeroSubmissionsAccepted, null, 2)
         );
         fs.writeFileSync(
             'submissions.json',
-            JSON.stringify(submissions, null, 2),
+            JSON.stringify(submissions, null, 2)
         );
         process.exit();
     });
