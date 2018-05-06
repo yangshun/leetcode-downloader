@@ -51,7 +51,7 @@ Promise.all(
                 .request(
                     Object.assign(requestParams, {
                         url: `https://leetcode.com${url}`,
-                    }),
+                    })
                 )
                 .then(({ data }) => {
                     // Pad ID to 4 digits.
@@ -64,7 +64,7 @@ Promise.all(
                     const code =
                         matches[1].replace(/\\u[\dA-F]{4}/gi, match => {
                             return String.fromCharCode(
-                                parseInt(match.replace(/\\u/g, ''), 16),
+                                parseInt(match.replace(/\\u/g, ''), 16)
                             );
                         }) + '\n';
                     const filename = `${idStr}-${slug}.${
@@ -81,7 +81,7 @@ Promise.all(
                     resolve();
                 });
         });
-    }),
+    })
 ).then(() => {
     console.log('\nDone fetching');
     process.exit();
